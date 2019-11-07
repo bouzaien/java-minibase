@@ -407,7 +407,7 @@ public class BufMgr implements GlobalConst{
    * @param numbufs number of buffers in the buffer pool.
    * @param replacerArg name of the buffer replacement policy.
    */
-  public BufMgr( int numbufs, String replacerArg )
+  public BufMgr( int numbufs, String replacerArg, int lastRef )
   	
     {
       
@@ -439,6 +439,16 @@ public class BufMgr implements GlobalConst{
 	  {
 	    replacer = new LRU(this);
 	    System.out.println("Replacer: MRU\n");
+	  }
+	else if(replacerArg.compareTo("FIFO")==0)
+	  {
+	    replacer = new FIFO(this);
+	    System.out.println("Replacer: FIFO\n");
+	  }
+	else if(replacerArg.compareTo("LIFO")==0)
+	  {
+	    replacer = new LIFO(this);
+	    System.out.println("Replacer: LIFO\n");
 	  }
 	else
 	  {
