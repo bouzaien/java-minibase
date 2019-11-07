@@ -1,4 +1,4 @@
-/* File LRU.java */
+/* File FIFO.java */
 
 package bufmgr;
 
