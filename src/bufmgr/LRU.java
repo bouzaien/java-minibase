@@ -9,19 +9,19 @@ import global.*;
    * class LRU is a subclass of class Replacer using LRU
    * algorithm for page replacement
    */
-class LRU extends  Replacer {
+class LRU extends Replacer {
 
   /**
    * private field
    * An array to hold number of frames in the buffer pool
    */
-	private int  frames[];
+	private int frames[];
  
   /**
    * private field
    * number of frames used
    */
-	private int  nframes;
+	private int nframes;
 
   /**
    * This pushes the given frame to the end of the list.
