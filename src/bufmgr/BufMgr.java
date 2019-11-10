@@ -331,6 +331,9 @@ public class BufMgr implements GlobalConst{
   /** The replacer object, which is only used in this class. */
   private Replacer replacer;
   
+  /** The number of last references to consider. */
+  private int lastRef;
+  
   
   /** Factor out the common code for the two versions of Flush 
    *
@@ -407,7 +410,7 @@ public class BufMgr implements GlobalConst{
    * @param numbufs number of buffers in the buffer pool.
    * @param replacerArg name of the buffer replacement policy.
    */
-  public BufMgr( int numbufs, String replacerArg, int lastRef )
+  public BufMgr( int numbufs, String replacerArg )
   	
     {
       
@@ -460,6 +463,19 @@ public class BufMgr implements GlobalConst{
       replacer.setBufferManager( this );
       
     }
+  
+  /** 
+   * Create a buffer manager object.
+   *
+   * @param numbufs number of buffers in the buffer pool.
+   * @param replacerArg name of the buffer replacement policy.
+   * @param lastRef number of last references to consider.
+   */
+  public BufMgr( int numbufs, String replacerArg, int lastRef )
+  {
+	  this(numbufs, replacerArg);
+	  this.lastRef = lastRef;
+  }
   
   
   // Debug use only   
