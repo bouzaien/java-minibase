@@ -453,6 +453,11 @@ public class BufMgr implements GlobalConst{
 				replacer = new LIFO(this);
 				System.out.println("Replacer: LIFO\n");
 			}
+			else if(replacerArg.compareTo("LRU-k")==0)
+			{
+				replacer = new LRU_k(this);
+				System.out.println("Replacer: LRU-k\n");
+			}
 			else
 			{
 				replacer = new Clock(this);
