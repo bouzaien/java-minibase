@@ -1,0 +1,15 @@
+/Catalogioerror.class
+/Catalogmissparam.class
+/Catalognomem.class
+/Catalogrelexists.class
+/Catalogrelnotfound.class
+/IndexCatalog.class
+/IndexCatalogException.class
+/IndexDesc.class
+/RelCatalog.class
+/RelCatalogException.class
+/RelDesc.class
+/Utility.class
+/attrData.class
+/attrInfo.class
+/attrNode.class
