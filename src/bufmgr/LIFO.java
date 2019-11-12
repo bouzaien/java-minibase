@@ -3,18 +3,18 @@
 package bufmgr;
 
 public class LIFO extends Replacer {
-	
+
 	private int  frames[];
 	private int  nframes;
-	
-    public LIFO(BufMgr mgrArg)
-    {
-    	super(mgrArg);
-    	frames = null;
-    }
-    
-    public void setBufferManager( BufMgr mgr )
-    {
+
+	public LIFO(BufMgr mgrArg)
+	{
+		super(mgrArg);
+		frames = null;
+	}
+
+	public void setBufferManager( BufMgr mgr )
+	{
 		super.setBufferManager(mgr);
 
 		int numBuffers = mgr.getNumBuffers();
@@ -24,8 +24,8 @@ public class LIFO extends Replacer {
 			frames[index] = -index;
 
 		frames[0] = -numBuffers;
-    }
-	
+	}
+
 	private void update(int frameNo)
 	{
 		int index;
@@ -44,7 +44,7 @@ public class LIFO extends Replacer {
 
 		frames[0] = frame;
 	}
-	
+
 	public void pin(int frameNo) throws InvalidFrameNumberException
 	{
 		super.pin(frameNo);
