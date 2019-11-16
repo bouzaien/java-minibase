@@ -152,7 +152,7 @@ public class LRUK extends Replacer {
 	 *
 	 * @return	return the name of replacement policy used
 	 */  
-	public String name() { return "LRU-k"; }
+	public String name() { return "LRUK"; }
 
 	/**
 	 * print out the information of frame usage
@@ -169,5 +169,9 @@ public class LRUK extends Replacer {
 		}
 		System.out.println();
 	} // End info()
+
+	public int[] getFrames() { return frames;	}
+
+	public long HIST(int pagenumber, int i) { return hist[pagenumber][i];	}
 
 }// End LRUK
