@@ -7,3 +7,6 @@ LRU:
 		The inconvenient of this policy is that we have to update the list about every memory reference which is time consuming.
 		This policy does not give importance to usage frequency of page, so it can keep pages that have very infrequent reference.
 
+LRU-K:
+	Idea:
+		Uses the last K>=2 references to a page to pick a victim and only keep pages with shortest access interval time or a greatest probability of reference (needs to calculate Backward K-distance bt(p,K)).
