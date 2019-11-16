@@ -455,7 +455,7 @@ public class BufMgr implements GlobalConst{
 			}
 			else if(replacerArg.compareTo("LRU-k")==0)
 			{
-				replacer = new LRU_k(this);
+				replacer = new LRUK(this);
 				System.out.println("Replacer: LRU-k\n");
 			}
 			else
@@ -840,6 +840,11 @@ public class BufMgr implements GlobalConst{
 
 	/** A few routines currently need direct access to the FrameTable. */
 	public   FrameDesc[] frameTable() { return frmeTable; }
+	
+	/** Gets the number of last references to consider
+	 * @return the number of last references to consider
+	 */
+	public int getLastRef() { return lastRef; }
 
 	private void write_page (PageId pageno, Page page)
 			throws BufMgrException {
