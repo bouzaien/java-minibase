@@ -845,6 +845,8 @@ public class BufMgr implements GlobalConst{
 	 * @return the number of last references to consider
 	 */
 	public int getLastRef() { return lastRef; }
+	
+	public Replacer getReplacer() { return replacer; }
 
 	private void write_page (PageId pageno, Page page)
 			throws BufMgrException {
