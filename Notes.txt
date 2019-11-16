@@ -1,0 +1,9 @@
+Notes :
+
+LRU:
+	Idea:
+		The idea of this replacement policy is that the most recently used pages are most likely to be used during the next instructions, so when replacing, the least recently used pages are chosen as victims. The pages are stored in a linked list (ordered): the least recently used element is at the back of the list.
+	Drawbacks:
+		The inconvenient of this policy is that we have to update the list about every memory reference which is time consuming.
+		This policy does not give importance to usage frequency of page, so it can keep pages that have very infrequent reference.
+
