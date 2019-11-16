@@ -75,4 +75,20 @@ public class FIFO extends Replacer {
 		return "FIFO";
 	}
 
+	/**
+	 * print out the information of frame usage
+	 */  
+	public void info()
+	{
+		super.info();
+		System.out.print( "FIFO REPLACEMENT");
+
+		for (int i = 0; i < nframes; i++) {
+			if (i % 5 == 0)
+				System.out.println( );
+			System.out.print( "\t" + frames[i]);
+		}
+		System.out.println();
+	}
+
 }
