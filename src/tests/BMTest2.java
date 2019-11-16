@@ -38,7 +38,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 		System.out.print ("\n" + "Running " + testName() + " tests...." + "\n");
 
 		try {
-			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, "LRUK");
+			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, "LRUK", 2);
 		}
 
 		catch (Exception e) {
@@ -155,7 +155,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 			} 		  
 			System.out.print("\n  Test 1 does simple test on buffer using the" +replacealgo[i] + "algorithm");
 			System.out.print("manager operations:\n");
-			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i]);
+			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i], 2);
 
 			// We choose this number to ensure that at least one page will have to be
 			// written during this test.
@@ -338,7 +338,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 
 			System.out.print("\n  Test 2 exercises some illegal buffer " +
 					"manager operations:"+replacealgo[i]+"\n");
-			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i]);
+			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i], 2);
 
 			// We choose this number to ensure that pinning this number of buffers
 			// should fail.
@@ -532,7 +532,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 			}  
 			System.out.print("\n  Test 3 exercises some of the internals " +
 					"of the buffer manager"+replacealgo[i]+"\n");
-			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i]);
+			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i], 2);
 
 			int index; 
 			int numPages = NUMBUF + 10;
@@ -660,92 +660,92 @@ class BMDriver extends TestDriver implements GlobalConst {
 
 
 
-	/*protected boolean test4 () {
+	protected boolean test4 () {
 
 
 
-	    System.out.print("\n  Test 4 \n");
+		System.out.print("\n  Test 4 \n");
 
-	    int numPages = SystemDefs.JavabaseBM.getNumUnpinnedBuffers() + 1;
-	    Page pg = new Page ();
-	    PageId pid, lastPid;
-	    PageId firstPid = new PageId();
-	    boolean status = OK;
-	    SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, "LRUK");
-	    LRUK replacer=(LRUK)(SystemDefs.JavabaseBM.getReplacer());
-	    int frames[]=replacer.getFrames();
+		int numPages = SystemDefs.JavabaseBM.getNumUnpinnedBuffers() + 1;
+		Page pg = new Page ();
+		PageId pid, lastPid;
+		PageId firstPid = new PageId();
+		boolean status = OK;
+		SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, "LRUK", 2);
+		LRUK replacer=(LRUK)(SystemDefs.JavabaseBM.getReplacer());
+		int frames[]=replacer.getFrames();
 
-	    if ( status == OK )
-	    {
-	        System.out.print ("- Read the pages\n");
-		int pagenumber=-1;
+		if ( status == OK )
+		{
+			System.out.print ("- Read the pages\n");
+			int pagenumber=-1;
 
-	        for ( int index=1; status == OK && index < numPages; index++ ) {
-	        try
-	        {
-	        	pagenumber=frames[index-1];
-	        	if(replacer.back(pagenumber,1)>MAX_SPACE)
-	        	{
-	        		SystemDefs.JavabaseBM.unpinPage( new PageId(pagenumber), true );
-	        	}
-	        }
-	        catch (Exception e) 
-	        { 
-	        	status = FAIL;
-	        	System.err.print("*** Early Page Replacement " + new PageId(pagenumber) + "\n");
-	            e.printStackTrace();
-	        }
-	        }
+			for ( int index=1; status == OK && index < numPages; index++ ) {
+				try
+				{
+					pagenumber=frames[index-1];
+					if(replacer.back(pagenumber,1)>MAX_SPACE)
+					{
+						SystemDefs.JavabaseBM.unpinPage( new PageId(pagenumber), true );
+					}
+				}
+				catch (Exception e) 
+				{ 
+					status = FAIL;
+					System.err.print("*** Early Page Replacement " + new PageId(pagenumber) + "\n");
+					e.printStackTrace();
+				}
+			}
 
-	      if (status == OK)
-	      {
-	    	  try
-	    	  {
-	    		  for (int i=0;i<numPages;i++)
-	    		  {
-	    			  pagenumber=frames[i];
-	    			 if(replacer.HIST(pagenumber,1)>System.currentTimeMillis())
-	    			  {
-	    				  status=FAIL;
-	    			  }
+			if (status == OK)
+			{
+				try
+				{
+					for (int i=0;i<numPages;i++)
+					{
+						pagenumber=frames[i];
+						if(replacer.HIST(pagenumber,1)>System.currentTimeMillis())
+						{
+							status=FAIL;
+						}
 
-	    		  }
+					}
 
-	    	  }
-	    	  catch(Exception e)
-	    	  {
-	    		  status = FAIL;
-	    		  System.err.print ("Incorrect time reference\n");
-	    	  }
-	      }
-	      else 
-	      {
-	    	  status = OK;
-	      }
-	    }
+				}
+				catch(Exception e)
+				{
+					status = FAIL;
+					System.err.print ("Incorrect time reference\n");
+				}
+			}
+			else 
+			{
+				status = OK;
+			}
+		}
 
-    pid = new PageId();
-    lastPid = new PageId();
+		pid = new PageId();
+		lastPid = new PageId();
 
-	    for ( pid.pid = firstPid.pid; pid.pid < lastPid.pid; 
-		  pid.pid = pid.pid + 1 ) {
-	      try {
-		SystemDefs.JavabaseBM.freePage( pid );
-	      }
-	      catch (Exception e) { 
-		status = FAIL;
-		System.err.print ("*** Error freeing page " + pid.pid + "\n");
-		e.printStackTrace();
-	      }
-	    }
+		for ( pid.pid = firstPid.pid; pid.pid < lastPid.pid; 
+				pid.pid = pid.pid + 1 ) {
+			try {
+				SystemDefs.JavabaseBM.freePage( pid );
+			}
+			catch (Exception e) { 
+				status = FAIL;
+				System.err.print ("*** Error freeing page " + pid.pid + "\n");
+				e.printStackTrace();
+			}
+		}
 
-	    if ( status == OK )
-	      System.out.print ("  Test 4 completed successfully.\n");
+		if ( status == OK )
+			System.out.print ("  Test 4 completed successfully.\n");
 
-	    return status;
-	  }
+		return status;
+	}
 
-  /**
+	/**
 	 * overrides the test5 function in TestDriver
 	 *
 	 * @return whether test5 has passed
