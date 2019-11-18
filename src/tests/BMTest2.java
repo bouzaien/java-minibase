@@ -130,9 +130,9 @@ class BMDriver extends TestDriver implements GlobalConst {
 	 */
 	protected boolean test1 () {
 
-		String replacealgo[]={"FIFO","LIFO","LRUK"};
+		String replacealgo[]={"FIFO","LIFO","LRU","MRU","LRUK"};
 		boolean status = OK;
-		for(int i=0;i<3;i++)
+		for(int i=0;i<5;i++)
 		{
 			(new File(dbpath)).delete();
 
@@ -153,8 +153,8 @@ class BMDriver extends TestDriver implements GlobalConst {
 				System.out.print("Unable to destroy db\n");
 
 			} 		  
-			System.out.print("\n  Test 1 does simple test on buffer using the" +replacealgo[i] + "algorithm");
-			System.out.print("manager operations:\n");
+			System.out.print("\n  Test 1 does simple test on buffer using the " +replacealgo[i] + " algorithm");
+			System.out.print(" manager operations:\n");
 			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i], 2);
 
 			// We choose this number to ensure that at least one page will have to be
@@ -318,9 +318,9 @@ class BMDriver extends TestDriver implements GlobalConst {
 	 */
 	protected boolean test2 () {
 
-		String replacealgo[]={"FIFO","LIFO","LRUK"};
+		String replacealgo[]={"FIFO","LIFO","LRU","MRU","LRUK"};
 		boolean status = OK;
-		for(int i=0;i<3;i++)
+		for(int i=0;i<5;i++)
 		{
 
 			(new File(dbpath)).delete();
