@@ -174,4 +174,9 @@ public class LRUK extends Replacer {
 
 	public long HIST(int pagenumber, int i) { return hist[pagenumber][i];	}
 
+	public int back(int pagenumber, int i) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }// End LRUK
