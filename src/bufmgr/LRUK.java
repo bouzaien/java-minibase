@@ -62,7 +62,8 @@ public class LRUK extends Replacer {
 			}
 		} else {
 			long min = t;
-			for ( int i=0; i<nframes; i++) {
+			int i;
+			for ( i=0; i<nframes; i++ ) {
 				int frame = frames[i];
 				if ( t-last[frame]>= CRP && hist[frame][lastRef]<=min) {
 					int victim = frame;
@@ -74,15 +75,16 @@ public class LRUK extends Replacer {
 				/*write victim to database*/
 			}
 
-			// TODO
 			//fetch frameNo into the victim frame
+			frames[i] = frameNo;
 
 			if (true /* hist[frameNo] does not exist */) {
-				// allocate hist[frameNo]??
-				for (int i=2; i<=lastRef; i++)
+				for (int j=2; i<=lastRef; i++) {
+					// allocate hist[frameNo]??
 					hist[frameNo][i] = (long) 0;
+				}
 			} else {
-				for (int i=2; i<=lastRef; i++)
+				for (int j=2; i<=lastRef; i++)
 					hist[frameNo][i] = hist[frameNo][i-1];
 			}
 			hist[frameNo][1] = t;
@@ -106,6 +108,8 @@ public class LRUK extends Replacer {
 		frames = new int [ mgr.getNumBuffers() ];
 		nframes = 0;
 		lastRef = mgr.getLastRef();
+		hist = new long [mgr.getNumBuffers()][lastRef];
+		last = new long [mgr.getNumBuffers()];
 	}
 
 	/* public methods */
