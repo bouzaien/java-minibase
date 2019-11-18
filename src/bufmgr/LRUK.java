@@ -140,11 +140,32 @@ public class LRUK extends Replacer {
 	 * or choosing a page to replace using LRU policy
 	 *
 	 * @return 	return the frame number
-	 *		return -1 if failed
+	 *		return BufferPoolExceededException if failed
 	 */
-	public int pick_victim()
+	public int pick_victim() throws BufferPoolExceededException
 	{
-		return 0;
+		int numBuffers = mgr.getNumBuffers();
+		int frame;
+		
+		if ( nframes < numBuffers ) {
+			frame = nframes++;
+			frames[frame] = frame;
+			state_bit[frame].state = Pinned;
+			(mgr.frameTable())[frame].pin();
+			return frame;
+		}
+		
+		for ( int i = 0; i < numBuffers; ++i ) {
+			frame = frames[i];
+			if ( state_bit[frame].state != Pinned ) {
+				state_bit[frame].state = Pinned;
+				(mgr.frameTable())[frame].pin();
+				update(frame);
+				return frame;
+			}
+		}
+		
+		throw new BufferPoolExceededException (null, "BUFMGR: BUFMGR_EXCEEDED.");
 	}
 
 	/**
@@ -173,10 +194,5 @@ public class LRUK extends Replacer {
 	public int[] getFrames() { return frames;	}
 
 	public long HIST(int pagenumber, int i) { return hist[pagenumber][i];	}
-
-	public int back(int pagenumber, int i) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 }// End LRUK
