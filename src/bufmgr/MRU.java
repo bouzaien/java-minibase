@@ -104,7 +104,7 @@ class MRU extends Replacer {
 	 */
 
 
-	public int pick_victim()
+	public int pick_victim() throws BufferPoolExceededException
 	{
 		int numBuffers = mgr.getNumBuffers();
 		int i, frame;
@@ -132,7 +132,7 @@ class MRU extends Replacer {
 			}
 		}
 
-		return -1;   // No victims found!!
+		throw new BufferPoolExceededException (null, "BUFMGR: BUFMGR_EXCEEDED.");
 	}
 
 	/** 

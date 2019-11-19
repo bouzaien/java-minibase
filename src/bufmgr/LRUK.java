@@ -197,12 +197,13 @@ public class LRUK extends Replacer {
 
 	public int[] getFrames() { return frames;	}
 
-	public long HIST(int pagenumber, int i) { System.out.print(hist[pagenumber][i] + "\n"); return hist[pagenumber][i];	}
+	public long HIST(int pagenumber, int i) { return hist[pagenumber][i];	}
 
 	public long back(int pagenumber, int i) {
 		long t = System.currentTimeMillis();
 		long b = t - hist[pagenumber][i];
 		return b;
 	}
+	
 
 }// End LRUK

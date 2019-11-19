@@ -440,7 +440,7 @@ public class BufMgr implements GlobalConst{
 			}
 			else if(replacerArg.compareTo("MRU")==0)
 			{
-				replacer = new LRU(this);
+				replacer = new MRU(this);
 				System.out.println("Replacer: MRU\n");
 			}
 			else if(replacerArg.compareTo("FIFO")==0)

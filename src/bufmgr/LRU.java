@@ -89,7 +89,7 @@ class LRU extends Replacer {
    * @return 	return the frame number
    *		return -1 if failed
    */
-	public int pick_victim()
+	public int pick_victim() throws BufferPoolExceededException
 	{
 		int numBuffers = mgr.getNumBuffers();
 		int frame;
@@ -112,7 +112,7 @@ class LRU extends Replacer {
 			}
 		}
 		
-		return -1;
+		throw new BufferPoolExceededException (null, "BUFMGR: BUFMGR_EXCEEDED.");
 	}
  
   /**
