@@ -43,14 +43,18 @@ public class LRUK extends Replacer {
 		long 	t = System.currentTimeMillis();
 		int 	index;
 		boolean	exist = false; // To check if the page is already in the buffer
+		
+		
 		for ( index=0; index < nframes; ++index )
 			if ( frames[index] == frameNo ) {
 				exist = true;
 				break;
 			}
-
+		
+		// Update history information of page p already in the buffer
 		if (exist) {
 			if ( t-last[frameNo]>= CRP ) {
+				// A new uncorrelated reference
 				long refrencedPageCP = last[frameNo] - hist[frameNo][1];
 				for (int i=2; i<=lastRef; i++) {
 					hist[frameNo][i] = hist[frameNo][i-1] + refrencedPageCP;
@@ -58,39 +62,26 @@ public class LRUK extends Replacer {
 				hist[frameNo][1] = t;
 				last[frameNo] = t;
 			} else {
+				// A correlated reference
 				last[frameNo] = t;
 			}
-		} else {
-			long min = t;
-			int i;
-			for ( i=0; i<nframes; i++ ) {
-				int frame = frames[i];
-				if ( t-last[frame]>= CRP && hist[frame][lastRef]<=min) {
-					int victim = frame;
-					min = hist[frame][lastRef];
-				}
-			}
-
-			if (true /*victim is dirty*/) {
-				/*write victim to database*/
-			}
-
-			//fetch frameNo into the victim frame
-			frames[i] = frameNo;
-
-			if (true /* hist[frameNo] does not exist */) {
-				for (int j=2; i<=lastRef; i++) {
+			// Case where frameNo in frame but not in hist
+			if (hist[frameNo] == null) {
+				for (int j=2; j<=lastRef; j++) {
 					// allocate hist[frameNo]??
-					hist[frameNo][i] = (long) 0;
+					hist[frameNo][j] = (long) 0;
 				}
 			} else {
-				for (int j=2; i<=lastRef; i++)
-					hist[frameNo][i] = hist[frameNo][i-1];
-			}
+				for (int j=2; j<=lastRef; j++) {
+					hist[frameNo][j] = hist[frameNo][j-1];
+				}
 			hist[frameNo][1] = t;
 			last[frameNo] = t;
+			}
 		}
-	}
+	}	
+			
+		
 
 	/**
 	 * Calling super class the same method
@@ -126,7 +117,7 @@ public class LRUK extends Replacer {
 	}
 
 	/**
-	 * calll super class the same method
+	 * call super class the same method
 	 * pin the page in the given frame number 
 	 * move the page to the end of list  
 	 *
@@ -150,6 +141,9 @@ public class LRUK extends Replacer {
 	{
 		int numBuffers = mgr.getNumBuffers();
 		int frame;
+		long t = System.currentTimeMillis();
+		long min = t;
+		int victim = 0;
 		
 		if ( nframes < numBuffers ) {
 			frame = nframes++;
@@ -161,12 +155,16 @@ public class LRUK extends Replacer {
 		
 		for ( int i = 0; i < numBuffers; ++i ) {
 			frame = frames[i];
-			if ( state_bit[frame].state != Pinned ) {
-				state_bit[frame].state = Pinned;
-				(mgr.frameTable())[frame].pin();
-				update(frame);
-				return frame;
+			if ( t-last[frame]>= CRP && hist[frame][lastRef]<=min && state_bit[frame].state != Pinned ) {
+				victim = frame;
+				min = hist[victim][lastRef];
 			}
+		}
+		
+		if (victim != -1) {
+			state_bit[victim].state = Pinned;
+			(mgr.frameTable())[victim].pin();
+			return victim;
 		}
 		
 		throw new BufferPoolExceededException (null, "BUFMGR: BUFMGR_EXCEEDED.");
