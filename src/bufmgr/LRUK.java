@@ -163,7 +163,7 @@ public class LRUK extends Replacer {
 			}
 		}
 
-		if (victim != -1) {
+		if (victim >=0) {
 			state_bit[victim].state = Pinned;
 			(mgr.frameTable())[victim].pin();
 			return victim;
@@ -198,5 +198,10 @@ public class LRUK extends Replacer {
 	public int[] getFrames() { return frames;	}
 
 	public long HIST(int pagenumber, int i) { return hist[pagenumber][i];	}
+
+	public long back(int pagenumber, int i) {
+		long t = System.currentTimeMillis();
+		return t - hist[pagenumber][i];
+	}
 
 }// End LRUK

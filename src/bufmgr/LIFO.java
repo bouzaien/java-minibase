@@ -50,7 +50,8 @@ public class LIFO extends Replacer {
 		super.pin(frameNo);
 	}
 
-	public int pick_victim(){
+	public int pick_victim() throws BufferPoolExceededException
+	{
 
 		int numBuffers = mgr.getNumBuffers();
 		int i, frame;
@@ -78,7 +79,7 @@ public class LIFO extends Replacer {
 			}
 		}
 
-		return -1;   // No victims found!!
+		throw new BufferPoolExceededException (null, "BUFMGR: BUFMGR_EXCEEDED.");
 	}
 
 	public String name() {
