@@ -79,7 +79,9 @@ public class LIFO extends Replacer {
 			}
 		}
 
-		throw new BufferPoolExceededException (null, "BUFMGR: BUFMGR_EXCEEDED.");
+		
+			throw new BufferPoolExceededException (null, "BUFMGR: BUFMGR_EXCEEDED.");
+		
 	}
 
 	public String name() {

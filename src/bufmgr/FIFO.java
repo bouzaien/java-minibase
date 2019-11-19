@@ -46,7 +46,7 @@ public class FIFO extends Replacer {
 		super.pin(frameNo);
 	}
 
-	public int pick_victim()
+	public int pick_victim() throws BufferPoolExceededException
 	{
 		int numBuffers = mgr.getNumBuffers();
 		int frame;
@@ -68,8 +68,12 @@ public class FIFO extends Replacer {
 				return frame;
 			}
 		}
-		return -1;
+		
+		
+		throw new BufferPoolExceededException (null, "BUFMGR: BUFMGR_EXCEEDED.");
+		
 	}
+			
 
 	public String name() {
 		return "FIFO";

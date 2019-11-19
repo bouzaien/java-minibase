@@ -117,6 +117,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 		if (!test4()) { _passAll = FAIL; }
 		if (!test5()) { _passAll = FAIL; }
 		if (!test6()) { _passAll = FAIL; }
+		
 
 		return _passAll;
 	}
@@ -684,7 +685,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 				try
 				{
 					pagenumber=frames[index-1];
-					if(replacer.back(pagenumber,1)>MAX_SPACE)
+					if(replacer.back(pagenumber, 0)>MAX_SPACE)
 					{
 						SystemDefs.JavabaseBM.unpinPage( new PageId(pagenumber), true );
 					}
@@ -704,7 +705,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 					for (int i=0;i<numPages;i++)
 					{
 						pagenumber=frames[i];
-						if(replacer.HIST(pagenumber,1)>System.currentTimeMillis())
+						if(replacer.HIST(pagenumber,0)>=System.currentTimeMillis())
 						{
 							status=FAIL;
 						}
@@ -751,8 +752,8 @@ class BMDriver extends TestDriver implements GlobalConst {
 	 * @return whether test5 has passed
 	 */
 	protected boolean test5 () {
-
-		return true;
+		boolean status = OK;
+		return status;
 	}
 
 	/**
@@ -761,8 +762,8 @@ class BMDriver extends TestDriver implements GlobalConst {
 	 * @return whether test6 has passed
 	 */
 	protected boolean test6 () {
-
-		return true;
+		boolean status = OK;
+		return status;
 	}
 
 	/**
