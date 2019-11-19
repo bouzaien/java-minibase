@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+
+
+\title{Java Minibase Report}
+\author{Team AQ - Mokhles Bouzaien and Laila Salhi}
+\date{25th November 2019}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+
+\begin{document}
+
+\maketitle
+
+\section{FIFO and LIFO}
+
+
+\section{LRU-K}
+Why LRU-K?\\
+The idea of the \textit{LRU} replacement policy is that the most recently used pages are most likely to be used during the next instructions. So when replacing, the least recently used pages are chosen as victims. The pages are stored in an ordered list called \textit{frames} and containing \textit{n=nframes} pages: the least recently used element is at the back of the list.\\
+Drawbacks of \textit{LRU}:
+\begin{itemize}
+  \item We have to update the list about every memory reference which is time consuming.
+  \item It does not give importance to usage frequency of page, so it can keep pages that have very infrequent reference.
+\end{itemize}
+The \textit{LRU-K} replacement policy is an extension of the \textit{LRU} that uses the last $K$ references to a page $(K\geq2)$ to pick a victim and only keep pages with shortest access interval time or in other terms a greatest probability of reference. Do do that, we need to calculate Backward K-distance $b_t(p,K)$ which is the time T such as $r_T=p$ and $p$ is referenced exactly $K-1$ times after $T$. If there are not $K$ references of $p$ in total, then $b_t(p,K)=\infty$.\\
+In this policy, two structures are used to keep information about pages: $Hist(p,k)$ and $Last(p)$. Those two structures will be discussed later.
+
+\subsection{Initialization of $Hist(p)$}
+
+In the case where a page is not in the buffer pool: that means that no \textit{frameNo} was given to the page and that means that the \textit{frameNo} (\textit{pageId} in the buffer pool) is not in \textit{frames} the list of \textit{frames} used from the bufferpool. In \textit{LRU} policy, the \textit{frameNo} is added and shifted to the end of \textit{frames}. In the particular case of \textit{LRU-K} policy, we also add a line to the matrix \textit{Hist}. It's matrix (multidimensional array in \textit{Java}) of size $numBuffers \times K$ containing at a given position $(p,k) \in [0,numBuffers-1]\times[0,K-1]$ the timestamp (in milliseconds) of the ${k+1}^{th}$ occurrence of page $p$ backwards (e.g. $Hist(p1,0)$ is the last reference timestamp of page $p1$).
+
+
+\citep{O'Neil1993}
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
