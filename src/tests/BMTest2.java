@@ -685,7 +685,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 				try
 				{
 					pagenumber=frames[index-1];
-					if(replacer.back(pagenumber, 0)>MAX_SPACE)
+					if(replacer.last(pagenumber)>0)
 					{
 						SystemDefs.JavabaseBM.unpinPage( new PageId(pagenumber), true );
 					}

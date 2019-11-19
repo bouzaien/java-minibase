@@ -205,5 +205,8 @@ public class LRUK extends Replacer {
 		return b;
 	}
 	
+	public long last(int pagenumber) {
+		return hist[pagenumber][0];
+	}
 
 }// End LRUK
