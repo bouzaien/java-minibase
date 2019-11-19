@@ -62,27 +62,23 @@ public class LRUK extends Replacer {
 //				System.out.print ("\n");
 //				System.out.print (hist[frameNo].length);
 //				System.out.print ("\n");
-				long refrencedPageCP = last[frameNo] - hist[frameNo][1];
+				long refrencedPageCP = last[frameNo] - hist[frameNo][0];
 				for (int i=1; i<lastRef; i++) {
 					hist[frameNo][i] = hist[frameNo][i-1] + refrencedPageCP;
 				}
-				hist[frameNo][1] = t;
+				hist[frameNo][0] = t;
 				last[frameNo] = t;
 			} else {
 				// A correlated reference
 				last[frameNo] = t;
 			}
 
-		} else {
-			for (int j=2; j<=lastRef; j++) {
-				hist[frameNo][j] = hist[frameNo][j-1];
-			}
-			System.out.print (frameNo);
-			System.out.print ("\n");
-			System.out.print (hist.length);
-			hist[frameNo][1] = t;
-			last[frameNo] = t;
-		}
+		} 
+		/*
+		 * else { for (int j=1; j<=lastRef; j++) { hist[frameNo][j] =
+		 * hist[frameNo][j-1]; } System.out.print (frameNo); System.out.print ("\n");
+		 * System.out.print (hist.length); hist[frameNo][0] = t; last[frameNo] = t; }
+		 */
 	}	
 
 
