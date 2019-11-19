@@ -161,9 +161,9 @@ public class LRUK extends Replacer {
 
 		for ( int i = 0; i < numBuffers; ++i ) {
 			frame = frames[i];
-			if ( t-last[frame]>= CRP && hist[frame][lastRef]<=min && state_bit[frame].state != Pinned ) {
+			if ( t-last[frame]>= CRP && hist[frame][lastRef-1]<=min && state_bit[frame].state != Pinned ) {
 				victim = frame;
-				min = hist[victim][lastRef];
+				min = hist[victim][lastRef-1];
 			}
 		}
 
