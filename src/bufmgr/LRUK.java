@@ -53,6 +53,8 @@ public class LRUK extends Replacer {
 		
 		// Update history information of page p already in the buffer
 		if (exist) {
+			
+			
 			if ( t-last[frameNo]>= CRP ) {
 				// A new uncorrelated reference
 				long refrencedPageCP = last[frameNo] - hist[frameNo][1];
@@ -65,7 +67,10 @@ public class LRUK extends Replacer {
 				// A correlated reference
 				last[frameNo] = t;
 			}
+			
+			
 			// Case where frameNo in frame but not in hist
+			// it initializes history control block
 			if (hist[frameNo] == null) {
 				for (int j=2; j<=lastRef; j++) {
 					// allocate hist[frameNo]??
