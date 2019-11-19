@@ -410,10 +410,10 @@ public class BufMgr implements GlobalConst{
 	 * @param numbufs number of buffers in the buffer pool.
 	 * @param replacerArg name of the buffer replacement policy.
 	 */
-	public BufMgr( int numbufs, String replacerArg )
+	public BufMgr( int numbufs, String replacerArg, int lastRef )
 
 	{
-
+		this.lastRef = lastRef;
 		numBuffers = numbufs;  
 		frmeTable = new FrameDesc[numBuffers];
 		bufPool = new byte[numBuffers][MAX_SPACE];
@@ -467,19 +467,6 @@ public class BufMgr implements GlobalConst{
 
 		replacer.setBufferManager( this );
 
-	}
-
-	/** 
-	 * Create a buffer manager object.
-	 *
-	 * @param numbufs number of buffers in the buffer pool.
-	 * @param replacerArg name of the buffer replacement policy.
-	 * @param lastRef number of last references to consider.
-	 */
-	public BufMgr( int numbufs, String replacerArg, int lastRef )
-	{
-		this(numbufs, replacerArg);
-		this.lastRef = lastRef;
 	}
 
 
@@ -844,7 +831,7 @@ public class BufMgr implements GlobalConst{
 	/** Gets the number of last references to consider
 	 * @return the number of last references to consider
 	 */
-	public int getLastRef() { return lastRef; }
+	public int getLastRef() { return this.lastRef; }
 	
 	public Replacer getReplacer() { return replacer; }
 

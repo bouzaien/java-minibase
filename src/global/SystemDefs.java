@@ -53,6 +53,8 @@ public class SystemDefs {
 		JavabaseCatalog = null;
 
 		try {
+//			System.out.print("lastRef of SysDefs\n");
+//			System.out.print(lastRef);
 			JavabaseBM = new BufMgr(bufpoolsize, replacement_policy, lastRef);
 			JavabaseDB = new DB();
 			/*
