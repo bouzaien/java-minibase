@@ -702,7 +702,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 			{
 				try
 				{
-					for (int i=0;i<numPages;i++)
+					for (int i=0;i<replacer.getFrames().length; i++)
 					{
 						pagenumber=frames[i];
 						if(replacer.last(pagenumber)>=System.currentTimeMillis())
