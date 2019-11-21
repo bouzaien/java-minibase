@@ -145,7 +145,7 @@ public class LRUK extends Replacer {
 		int frame;
 		long t = System.currentTimeMillis();
 		long min = t;
-		int victim = 0;
+		int victim = -1;
 
 		if ( nframes < numBuffers ) {
 			frame = nframes++;

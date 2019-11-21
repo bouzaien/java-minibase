@@ -705,7 +705,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 					for (int i=0;i<numPages;i++)
 					{
 						pagenumber=frames[i];
-						if(replacer.HIST(pagenumber,0)>=System.currentTimeMillis())
+						if(replacer.last(pagenumber)>=System.currentTimeMillis())
 						{
 							status=FAIL;
 						}
@@ -715,6 +715,9 @@ class BMDriver extends TestDriver implements GlobalConst {
 				}
 				catch(Exception e)
 				{
+					System.out.print ("page_number that fails:" + pagenumber); 
+					System.out.print (" with last (page_number) that fails:" + replacer.last(pagenumber)); 
+					System.out.print ("\n");
 					status = FAIL;
 					System.err.print ("Incorrect time reference\n");
 				}
