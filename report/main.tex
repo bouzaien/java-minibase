@@ -15,25 +15,39 @@
 \maketitle
 
 \section{FIFO and LIFO}
-
+FIFO and LIFO implementations are very similar to LRU and MRU ones. So for example to implement FIFO, we added the FIFO class to the BufMgr package and the added the constructor and the class methods:
+\begin{itemize}
+	\item \textit{void setBufferManager( BufMgr mgr )}: this method uses the same \textit{setBufferManager} of the \textit{Replacer} class to select the buffer manager, get the total number of frames and set their state to \textit{Available}. In addition, it initialize \textit{frames} and \textit{nframes}: two data structures used in \textit{FIFO} to keep information about pages available in the buffer pool.
+	\item \textit{void pin( int frameNo )}: used to pin a page. Already implemented in \textit{Replacer} class.
+	\item \textit{void update( int frameNo )}: this method is uded to update the \textit{frames} list: it searches for the referenced page and move it to the very end of the list.
+	\item \textit{int pick\_victim()}: when no more frames are available in the buffer pool, this method is used to select a victim page and replace it with the newly referenced page: it searches for the first unpinned page in \textit{frames}, replaces it and calls \textit{update} to move it to the end of the list.
+	\item \textit{String name()}: simply returns the name of the replacement policy.
+\end{itemize}
+The \textit{LIFO} class implements exactly the same methods. The only difference is that \textit{LIFO} replacement policy places the newly referenced pages at the beginning of \textit{frames} list in order to be picked first.
 
 \section{LRU-K}
-Why LRU-K?\\
-The idea of the \textit{LRU} replacement policy is that the most recently used pages are most likely to be used during the next instructions. So when replacing, the least recently used pages are chosen as victims. The pages are stored in an ordered list called \textit{frames} and containing \textit{n=nframes} pages: the least recently used element is at the back of the list.\\
-Drawbacks of \textit{LRU}:
+\textbf{Why LRU-K?}\\
+The idea of the \textit{LRU} replacement policy is that the most recently used pages are most likely to be used during the next instructions. So when replacing, the least recently used pages are chosen as victims. The pages are stored in an ordered list called \textit{frames} and containing \textit{n=nframes} pages (the same structures used previously): the least recently used element is at the back of the list. This replacement policy has a few drawbacks such as:
 \begin{itemize}
-  \item We have to update the list about every memory reference which is time consuming.
-  \item It does not give importance to usage frequency of page, so it can keep pages that have very infrequent reference.
+	\item It does not give importance to usage frequency of page, so it can keep pages that have very infrequent reference.
+	\item We have to update the list about every memory reference which is time consuming.
 \end{itemize}
 The \textit{LRU-K} replacement policy is an extension of the \textit{LRU} that uses the last $K$ references to a page $(K\geq2)$ to pick a victim and only keep pages with shortest access interval time or in other terms a greatest probability of reference. Do do that, we need to calculate Backward K-distance $b_t(p,K)$ which is the time T such as $r_T=p$ and $p$ is referenced exactly $K-1$ times after $T$. If there are not $K$ references of $p$ in total, then $b_t(p,K)=\infty$.\\
-In this policy, two structures are used to keep information about pages: $Hist(p,k)$ and $Last(p)$. Those two structures will be discussed later.
+In this policy, two structures are used to keep information about pages: $Hist(p,k)$ and $Last(p)$. Those two structures will be discussed later\citep{O'Neil1993}.
 
-\subsection{Initialization of $Hist(p)$}
+\subsection{$Hist[p][k]$}
 
 In the case where a page is not in the buffer pool: that means that no \textit{frameNo} was given to the page and that means that the \textit{frameNo} (\textit{pageId} in the buffer pool) is not in \textit{frames} the list of \textit{frames} used from the bufferpool. In \textit{LRU} policy, the \textit{frameNo} is added and shifted to the end of \textit{frames}. In the particular case of \textit{LRU-K} policy, we also add a line to the matrix \textit{Hist}. It's matrix (multidimensional array in \textit{Java}) of size $numBuffers \times K$ containing at a given position $(p,k) \in [0,numBuffers-1]\times[0,K-1]$ the timestamp (in milliseconds) of the ${k+1}^{th}$ occurrence of page $p$ backwards (e.g. $Hist(p1,0)$ is the last reference timestamp of page $p1$).
 
+\subsection{$Last[p]$}
+To be continued ..
 
-\citep{O'Neil1993}
+\section{Changes to other classes}
+Minor changes were performed to other classes in order to adapt our code to the new implementations.
+To be continued ..
+
+\section{Tests}
+To be continued ..
 
 \bibliographystyle{plain}
 \bibliography{references}
