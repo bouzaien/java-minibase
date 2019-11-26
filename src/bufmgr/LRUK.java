@@ -211,8 +211,9 @@ public class LRUK extends Replacer {
 	// here last return the time of last occurence of pagenumber
 	// it is taken from hist because last contains also time of 
 	// correlated references.
-	public long last(int pagenumber) {
-		return hist[pagenumber][0];
+	public long LAST(int pagenumber) {
+		return last[pagenumber];
+		//return hist[pagenumber][0];
 	}
 
 }// End LRUK

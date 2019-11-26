@@ -687,7 +687,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 				try
 				{
 					pagenumber=frames[index-1];
-					if(replacer.last(pagenumber)>0)
+					if(replacer.LAST(pagenumber)>0)
 					{
 						SystemDefs.JavabaseBM.unpinPage( new PageId(pagenumber), true );
 					}
@@ -707,7 +707,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 					for (int i=0;i<replacer.getFrames().length; i++)
 					{
 						pagenumber=frames[i];
-						if(replacer.last(pagenumber)>=System.currentTimeMillis())
+						if(replacer.LAST(pagenumber)>=System.currentTimeMillis())
 						{
 							status=FAIL;
 						}
@@ -718,7 +718,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 				catch(Exception e)
 				{
 					System.out.print ("page_number that fails:" + pagenumber); 
-					System.out.print (" with last (page_number) that fails:" + replacer.last(pagenumber)); 
+					System.out.print (" with last (page_number) that fails:" + replacer.LAST(pagenumber)); 
 					System.out.print ("\n");
 					status = FAIL;
 					System.err.print ("Incorrect time reference\n");
