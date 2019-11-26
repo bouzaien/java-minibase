@@ -15,8 +15,10 @@ import chainexception.*;
 /**
  * This class provides the functions to test the buffer manager
  */
-class BMDriver extends TestDriver implements GlobalConst {
 
+
+class BMDriver extends TestDriver implements GlobalConst {
+	public static final int K = 2;
 	private int TRUE  = 1;
 	private int FALSE = 0;
 	private boolean OK = true;
@@ -38,7 +40,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 		System.out.print ("\n" + "Running " + testName() + " tests...." + "\n");
 
 		try {
-			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, "LRUK", 2);
+			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, "LRUK", K);
 		}
 
 		catch (Exception e) {
@@ -156,7 +158,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 			} 		  
 			System.out.print("\n  Test 1 does simple test on buffer using the " +replacealgo[i] + " algorithm");
 			System.out.print(" manager operations:\n");
-			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i], 2);
+			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i], K);
 
 			// We choose this number to ensure that at least one page will have to be
 			// written during this test.
@@ -339,7 +341,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 
 			System.out.print("\n  Test 2 exercises some illegal buffer " +
 					"manager operations:"+replacealgo[i]+"\n");
-			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i], 2);
+			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i], K);
 
 			// We choose this number to ensure that pinning this number of buffers
 			// should fail.
@@ -533,7 +535,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 			}  
 			System.out.print("\n  Test 3 exercises some of the internals " +
 					"of the buffer manager"+replacealgo[i]+"\n");
-			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i], 2);
+			SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i], K);
 
 			int index; 
 			int numPages = NUMBUF + 10;
@@ -672,7 +674,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 		PageId pid, lastPid;
 		PageId firstPid = new PageId();
 		boolean status = OK;
-		SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, "LRUK", 2);
+		SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, "LRUK", K);
 		LRUK replacer=(LRUK)(SystemDefs.JavabaseBM.getReplacer());
 		int frames[]=replacer.getFrames();
 
