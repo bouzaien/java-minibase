@@ -1,0 +1,174 @@
+Script started on 2019-11-26 19:15:31+0100
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                                         ]2;mokhles@mokhles-X541UJ: ~/Desktop/EURECOM/DBSys/javaminibase/src]1;..aminibase/src[0m[27m[24m[J[01;32m➜  [36msrc[00m [01;34mgit:([31mmaster[34m) [33m✗[00m [K[193C∞[194D[?1h=[?2004hscript/usr/lib/jvm/java-11-openjdk-amd64/bin/java -Dfile.encoding=UTF-8 -classpath /home/mokhles/Desktop/EURECOM/DBSys/javaminibase/src tests.BMTest2[?1l>[?2004l
+]2;/usr/lib/jvm/java-11-openjdk-amd64/bin/java -Dfile.encoding=UTF-8 -classpath ]1;/usr/lib/jvm/java-11-openjdk-amd64/bin/java
+Running Buffer Management tests....
+Replacer: LRUK
+
+
+  Test 1 does simple test on buffer using the FIFO algorithm manager operations:
+Replacer: FIFO
+
+  - Allocate a bunch of new pages
+  - Write something on each one
+  - Read that something back from each one
+   (because we're buffering, this is where most of the writes happen)
+  - Free the pages again
+  Test 1 completed successfully.
+
+  Test 1 does simple test on buffer using the LIFO algorithm manager operations:
+Replacer: LIFO
+
+  - Allocate a bunch of new pages
+  - Write something on each one
+  - Read that something back from each one
+   (because we're buffering, this is where most of the writes happen)
+  - Free the pages again
+  Test 1 completed successfully.
+
+  Test 1 does simple test on buffer using the LRU algorithm manager operations:
+Replacer: LRU
+
+  - Allocate a bunch of new pages
+  - Write something on each one
+  - Read that something back from each one
+   (because we're buffering, this is where most of the writes happen)
+  - Free the pages again
+  Test 1 completed successfully.
+
+  Test 1 does simple test on buffer using the MRU algorithm manager operations:
+Replacer: MRU
+
+  - Allocate a bunch of new pages
+  - Write something on each one
+  - Read that something back from each one
+   (because we're buffering, this is where most of the writes happen)
+  - Free the pages again
+  Test 1 completed successfully.
+
+  Test 1 does simple test on buffer using the LRUK algorithm manager operations:
+Replacer: LRUK
+
+  - Allocate a bunch of new pages
+  - Write something on each one
+  - Read that something back from each one
+   (because we're buffering, this is where most of the writes happen)
+  - Free the pages again
+  Test 1 completed successfully.
+
+  Test 2 exercises some illegal buffer manager operations:FIFO
+Replacer: FIFO
+
+  - Try to pin more pages than there are frames
+*** Pinning too many pages
+  --> Failed as expected 
+
+  - Try to free a doubly-pinned page
+*** Freeing a pinned page
+  --> Failed as expected 
+
+  - Try to unpin a page not in the buffer pool
+*** Unpinning a page not in the buffer pool
+  --> Failed as expected 
+
+  Test 2 completed successfully.
+
+  Test 2 exercises some illegal buffer manager operations:LIFO
+Replacer: LIFO
+
+  - Try to pin more pages than there are frames
+*** Pinning too many pages
+  --> Failed as expected 
+
+  - Try to free a doubly-pinned page
+*** Freeing a pinned page
+  --> Failed as expected 
+
+  - Try to unpin a page not in the buffer pool
+*** Unpinning a page not in the buffer pool
+  --> Failed as expected 
+
+  Test 2 completed successfully.
+
+  Test 2 exercises some illegal buffer manager operations:LRU
+Replacer: LRU
+
+  - Try to pin more pages than there are frames
+*** Pinning too many pages
+  --> Failed as expected 
+
+  - Try to free a doubly-pinned page
+*** Freeing a pinned page
+  --> Failed as expected 
+
+  - Try to unpin a page not in the buffer pool
+*** Unpinning a page not in the buffer pool
+  --> Failed as expected 
+
+  Test 2 completed successfully.
+
+  Test 2 exercises some illegal buffer manager operations:MRU
+Replacer: MRU
+
+  - Try to pin more pages than there are frames
+*** Pinning too many pages
+  --> Failed as expected 
+
+  - Try to free a doubly-pinned page
+*** Freeing a pinned page
+  --> Failed as expected 
+
+  - Try to unpin a page not in the buffer pool
+*** Unpinning a page not in the buffer pool
+  --> Failed as expected 
+
+  Test 2 completed successfully.
+
+  Test 2 exercises some illegal buffer manager operations:LRUK
+Replacer: LRUK
+
+  - Try to pin more pages than there are frames
+*** Pinning too many pages
+  --> Failed as expected 
+
+  - Try to free a doubly-pinned page
+*** Freeing a pinned page
+  --> Failed as expected 
+
+  - Try to unpin a page not in the buffer pool
+*** Unpinning a page not in the buffer pool
+  --> Failed as expected 
+
+  Test 2 completed successfully.
+
+  Test 3 exercises some of the internals of the buffer managerFIFO
+Replacer: FIFO
+
+  - Allocate and dirty some new pages, one at a time, and leave some pinned
+  - Read the pages
+  Test 3 completed successfully.
+
+  Test 3 exercises some of the internals of the buffer managerLIFO
+Replacer: LIFO
+
+  - Allocate and dirty some new pages, one at a time, and leave some pinned
+  - Read the pages
+  Test 3 completed successfully.
+
+  Test 3 exercises some of the internals of the buffer managerLRUK
+Replacer: LRUK
+
+  - Allocate and dirty some new pages, one at a time, and leave some pinned
+  - Read the pages
+  Test 3 completed successfully.
+
+  Test 4 
+Replacer: LRUK
+
+- Read the pages
+  Test 4 completed successfully.
+
+...Buffer Management tests completely successfully.
+
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                                         ]2;mokhles@mokhles-X541UJ: ~/Desktop/EURECOM/DBSys/javaminibase/src]1;..aminibase/src[0m[27m[24m[J[01;32m➜  [36msrc[00m [01;34mgit:([31mmaster[34m) [33m✗[00m [K[193C∞[194D[?1h=[?2004h[?2004l
+
+Script done on 2019-11-26 19:15:35+0100
