@@ -51,17 +51,11 @@ public class LRUK extends Replacer {
 			}
 
 		// Update history information of page p already in the buffer
+		// Here if the Kth occurence of frameNo is correlated to the (K-1)th
+		// Then only last is updated and not hist
 		if (exist) {
 			if ( t-last[frameNo]>= CRP ) {
 				// A new uncorrelated reference
-//				System.out.print ("last\n");
-//				System.out.print (last[frameNo]);
-//				System.out.print ("\n");
-//				System.out.print ("hist\n");
-//				System.out.print (lastRef);
-//				System.out.print ("\n");
-//				System.out.print (hist[frameNo].length);
-//				System.out.print ("\n");
 				long refrencedPageCP = last[frameNo] - hist[frameNo][0];
 				for (int i=1; i<lastRef; i++) {
 					hist[frameNo][i] = hist[frameNo][i-1] + refrencedPageCP;
@@ -81,8 +75,6 @@ public class LRUK extends Replacer {
 		 */
 	}	
 
-
-
 	/**
 	 * Calling super class the same method
 	 * Initializing the frames[] with number of buffer allocated
@@ -99,8 +91,6 @@ public class LRUK extends Replacer {
 		frames = new int [ mgr.getNumBuffers() ];
 		nframes = 0;
 		lastRef = mgr.getLastRef();
-//		System.out.print("lastRef of LRUK\n");
-//		System.out.print(lastRef);
 		hist = new long [mgr.getNumBuffers()][lastRef];
 		last = new long [mgr.getNumBuffers()];
 	}
@@ -146,7 +136,8 @@ public class LRUK extends Replacer {
 		long t = System.currentTimeMillis();
 		long min = t;
 		int victim = -1;
-
+		
+		// if bufferpool not completely filled take next frame
 		if ( nframes < numBuffers ) {
 			frame = nframes++;
 			frames[frame] = frame;
@@ -154,7 +145,11 @@ public class LRUK extends Replacer {
 			(mgr.frameTable())[frame].pin();
 			return frame;
 		}
-
+		
+		// if all frames used in bufferpool pick victim with
+		// maximum backward K-distance
+		// actually the minimum is searched for since 
+		// we are doing the backward algortihm reversely
 		for ( int i = 0; i < numBuffers; ++i ) {
 			frame = frames[i];
 			if ( t-last[frame]>= CRP && hist[frame][lastRef-1]<=min && state_bit[frame].state != Pinned ) {
@@ -162,7 +157,8 @@ public class LRUK extends Replacer {
 				min = hist[victim][lastRef-1];
 			}
 		}
-
+		
+		// condition added because pick_victim is supposed to throw BufferPoolExceededException
 		if (victim >=0) {
 			state_bit[victim].state = Pinned;
 			(mgr.frameTable())[victim].pin();
@@ -205,6 +201,16 @@ public class LRUK extends Replacer {
 		return b;
 	}
 	
+	/**
+	 * method needed for test4 returning time of Kth occurance 
+	 * of pagenumber
+	 *
+	 * @param	 pagenumber	 
+	 * @return   time of Kth occurance of pagenumber
+	 */
+	// here last return the time of last occurence of pagenumber
+	// it is taken from hist because last contains also time of 
+	// correlated references.
 	public long last(int pagenumber) {
 		return hist[pagenumber][0];
 	}
