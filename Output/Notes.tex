@@ -7,7 +7,7 @@
 
 \usepackage{natbib}
 \usepackage{graphicx}
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=1.5in]{geometry}
 
 \begin{document}
 
@@ -41,7 +41,7 @@ In this policy, two structures are used to keep information about pages: $Hist(p
 In the case where a page is not in the buffer pool: that means that no \textit{frameNo} was given to the page and that means that the \textit{frameNo} (\textit{pageId} in the buffer pool) is not in \textit{frames} the list of \textit{frames} used from the bufferpool. In \textit{LRU} policy, the \textit{frameNo} is added and shifted to the end of \textit{frames}. In the particular case of \textit{LRU-K} policy, we also add a line to the matrix \textit{Hist}. It's matrix (multidimensional array in \textit{Java}) of size $numBuffers \times K$ containing at a given position $(p,k) \in [0,numBuffers-1]\times[0,K-1]$ the timestamp (in milliseconds) of the ${(k+1)}^{th}$ occurrence of page $p$ backwards (e.g. $Hist(p1,0)$ is the last reference timestamp of page $p1$).
 
 \subsection{$Last[p]$}
-To be continued ..
+\textit{last} is the second data structure used to get track of timestamps of the $k^{th}$ occurrences of \textit{p} without taking into account the correlation condition. That means whenever the page \textit{p} is referenced, \textit{last[p]} is updated with the reference time.
 
 \section{Changes to other classes}
 Minor changes were performed to other classes in order to adapt our code to the new implementations.\\
